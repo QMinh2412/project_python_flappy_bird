@@ -1,9 +1,11 @@
 import pygame
 
 class Bird:
-    def __init__ (bird, x, y, image):
-        bird.image = image
-        bird.rect = image.get_rect(center=(x,y))
+    def __init__ (bird, screen):
+        bird_img = pygame.image.load('assets/sprites/redbird-midflap.png').convert()
+        bird_img = pygame.transform.scale2x(bird_img)
+        bird.image = bird_img
+        bird.rect = bird.image.get_rect(center=(100,384))
         bird.gravity = 0.25
         bird.movement = 0
         bird.jump_strength = -8

@@ -1,15 +1,17 @@
 import pygame, sys
+
+
+from ui import UI
+
 from bird import Bird
+
 pygame.init()
 screen = pygame.display.set_mode((432,768))
 clock = pygame.time.Clock()
-bg = pygame.image.load('assets/sprites/background-day.png')
-bg = pygame.transform.scale2x(bg)
 
-bird_img = pygame.image.load('assets/sprites/redbird-midflap.png').convert()
-bird_img = pygame.transform.scale2x(bird_img)
+ui = UI(screen)
 
-bird = Bird(100, 384, bird_img)
+bird = Bird(screen)
 
 running = True
 
@@ -24,9 +26,11 @@ while running:
             if event.key == pygame.K_SPACE or pygame.K_UP:
                 bird.jump()
 
+    ui.background()
+    ui.floor_loop()
+    ui.draw_floor()
 
     bird.update()
-    screen.blit(bg,(0,0))
     bird.draw(screen)
     pygame.display.update()
     # Tốc độ khung hình
