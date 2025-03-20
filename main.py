@@ -12,7 +12,7 @@ ui = UI(screen)
 bird_img = pygame.image.load('assets/sprites/redbird-midflap.png').convert()
 bird_img = pygame.transform.scale2x(bird_img)
 
-bird = Bird(100, 384, bird_img)
+bird = Bird()
 
 running = True
 
