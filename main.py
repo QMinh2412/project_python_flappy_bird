@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 
 ui = UI(screen)
 
-bird = Bird(screen)
+bird = Bird()
 
 running = True
 

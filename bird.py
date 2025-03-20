@@ -1,7 +1,7 @@
 import pygame
 
 class Bird:
-    def __init__ (bird, screen):
+    def __init__ (bird):
         bird_img = pygame.image.load('assets/sprites/redbird-midflap.png').convert()
         bird_img = pygame.transform.scale2x(bird_img)
         bird.image = bird_img
