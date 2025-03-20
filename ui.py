@@ -3,7 +3,7 @@ import pygame
 class UI:
     def __init__(self, screen):
         self.screen = screen
-        self.bg = pygame.image.load('assets/sprites/background-night.png')
+        self.bg = pygame.image.load('assets/sprites/background-day.png')
         self.bg = pygame.transform.scale(self.bg, (432, 700))
         self.floor = pygame.image.load('assets/sprites/base.png')
         self.floor = pygame.transform.scale2x(self.floor)
