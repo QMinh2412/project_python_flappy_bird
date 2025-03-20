@@ -19,3 +19,7 @@ class Bird:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+    
+    def restart(self):
+        self.rect.center = (100, 384)
+        self.movement = 0
