@@ -3,14 +3,6 @@ import pygame, sys
 from bird import Bird
 from ui import UI
 
-pygame.init()
-screen = pygame.display.set_mode((432,720))
-clock = pygame.time.Clock()
-running = True
-
-ui = UI(screen)
-bird = Bird()
-
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision():
     # for pipe in pipes:
@@ -19,6 +11,14 @@ def check_collision():
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
         return False
     return True
+
+pygame.init()
+screen = pygame.display.set_mode((432,720))
+clock = pygame.time.Clock()
+running = True
+
+ui = UI(screen)
+bird = Bird()
 
 game_active = True
 
