@@ -3,6 +3,8 @@ import pygame, sys
 from bird import Bird
 from ui import UI
 
+bird = Bird()
+
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision():
     # for pipe in pipes:
