@@ -1,35 +1,22 @@
-import pygame, sys
+import pygame
 
-def floor_loop():
-    screen.blit(floor,(floor_x_pos,550))
-    screen.blit(floor,(floor_x_pos+432,550))
+class UI:
+    def __init__(self, screen):
+        self.screen = screen
+        self.bg = pygame.image.load('assets/sprites/background-day.png')
+        self.bg = pygame.transform.scale(self.bg, (432, 700))
+        self.floor = pygame.image.load('assets/sprites/base.png')
+        self.floor = pygame.transform.scale2x(self.floor)
+        self.floor_x_pos = 0
 
-pygame.init()
-screen = pygame.display.set_mode((432,720))
-clock = pygame.time.Clock()
-bg = pygame.image.load('assets/sprites/background-night.png')
-bg = pygame.transform.scale(bg,(432,700))
-floor = pygame.image.load('assets/sprites/base.png')
-floor = pygame.transform.scale2x(floor)
-floor_x_pos = 0
+    def background(self):
+        self.screen.blit(self.bg, (0, 0))
 
-running = True
+    def draw_floor(self):
+        self.screen.blit(self.floor, (self.floor_x_pos, 550))
+        self.screen.blit(self.floor, (self.floor_x_pos + 432, 550))
 
-while running:
-    # Xử lý sự kiện quit
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            sys.exit()
-
-    screen.blit(bg,(0,0))
-    floor_x_pos -= 1
-    floor_loop()
-    if floor_x_pos <= -432:
-        floor_x_pos = 0
-   
-    pygame.display.update()
-    # Tốc độ khung hình
-    clock.tick(60)
-
-pygame.quit()
+    def floor_loop(self):
+        self.floor_x_pos -= 1
+        if self.floor_x_pos <= -432:
+            self.floor_x_pos = 0

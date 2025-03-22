@@ -1,14 +1,21 @@
 # pylint: disable=no-member
-import pygame
-from pipe import Pipe
+import pygame, sys
+from bird import Bird
+from ui import UI
 
-# Khởi tạo pygame
+# Hàm kiểm tra va chạm với ống và sàn
+def check_collision():
+    # for pipe in pipes:
+    #     if bird_img.colliderect(pipe):
+    #         print('va cham')
+    if bird.rect.top <= -75 or bird.rect.bottom >= 550:
+        return False
+    return True
+
 pygame.init()
-screen = pygame.display.set_mode((432,768))
+screen = pygame.display.set_mode((432,720))
 clock = pygame.time.Clock()
 running = True
-
-pipe_manager = Pipe()
 
 while running:
     screen.fill((0,0,0))
@@ -16,11 +23,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pipe_manager.spawn_pipe_green:
-            pipe_manager.pipe_green_list.append(pipe_manager.create_pipe())
-
-    pipe_manager.move_pipe()
-    pipe_manager.draw_pipe(screen)
 
     # Tốc độ khung hình
     pygame.display.update()
