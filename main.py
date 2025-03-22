@@ -3,7 +3,6 @@ import pygame, sys
 from bird import Bird
 from ui import UI
 
-bird = Bird()
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision():
@@ -18,6 +17,9 @@ pygame.init()
 screen = pygame.display.set_mode((432,720))
 clock = pygame.time.Clock()
 running = True
+
+ui = UI(screen)
+bird = Bird()
 
 while running:
     screen.fill((0,0,0))
