@@ -1,16 +1,20 @@
 # pylint: disable=no-member
 import pygame, sys
-
-
+from bird import Bird
 from ui import UI
 
-from bird import Bird
+# Hàm kiểm tra va chạm với ống và sàn
+def check_collision():
+    # for pipe in pipes:
+    #     if bird_img.colliderect(pipe):
+    #         print('va cham')
+    if bird.rect.top <= -75 or bird.rect.bottom >= 550:
+        return False
+    return True
+
 pygame.init()
 screen = pygame.display.set_mode((432,720))
 clock = pygame.time.Clock()
-bg = pygame.image.load('assets/sprites/background-day.png')
-bg = pygame.transform.scale2x(bg)
-
 running = True
 
 ui = UI(screen)
@@ -32,11 +36,19 @@ while running:
                 game_active = True
                 bird.restart()
 
+    # Kiểm tra game đang chạy không, nếu va chạm sẽ ngưng
+    if game_active:
+        # bird
+        bird.update()
+        bird.draw(screen)
+        game_active = check_collision()
+        pygame.display.update()
 
-    bird.update()
-    screen.blit(bg,(0,0))
-    bird.draw(screen)
-    pygame.display.update()
+    # UI
+    ui.background()
+    ui.floor_loop()
+    ui.draw_floor()
+
     # Tốc độ khung hình
     clock.tick(60)
 
