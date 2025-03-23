@@ -1,0 +1,1 @@
+ui.update_score(bird, pipe.pipe_list)
