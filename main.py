@@ -36,10 +36,19 @@ while running:
                 game_active = True
                 bird.restart()
 
+        if event.type == bird.BIRDFLAP_EVENT:
+            if bird.bird_index < 2:
+                bird.bird_index += 1
+            else:
+                bird.bird_index = 0
+            bird.animation()
+
+
     # Kiểm tra game đang chạy không, nếu va chạm sẽ ngưng
     if game_active:
         # bird
         bird.update()
+        bird.rotate()
         bird.draw(screen)
         game_active = check_collision()
         pygame.display.update()
