@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 import pygame
 
 class Bird:
@@ -11,7 +12,7 @@ class Bird:
         self.rect = self.current_image.get_rect(center=(100,384))
         self.gravity = 0.25
         self.movement = 0
-        self.jump_strength = -8
+        self.jump_strength = -6.5
         self.BIRDFLAP_EVENT = pygame.USEREVENT + 1
         pygame.time.set_timer(self.BIRDFLAP_EVENT, 200)
 
