@@ -2,18 +2,28 @@ import pygame
 
 class UI:
     def __init__(self, screen):
-        #font game
+        # Font game
         self.game_font = pygame.font.Font('04B_19.ttf', 40)
-        #background, san
+        # Background và sàn
         self.screen = screen
         self.bg = pygame.image.load('assets/sprites/background-night.png')
         self.bg = pygame.transform.scale(self.bg, (432, 700))
         self.floor = pygame.image.load('assets/sprites/base.png')
         self.floor = pygame.transform.scale2x(self.floor)
         self.floor_x_pos = 0
-        #score
+        # Score
+        self.pipe_spawned = False
         self.score = 0
         self.high_score = 0
+        # Màn hình kết thúc game
+        self.game_over_surface = pygame.image.load('assets/sprites/message_resized.png').convert_alpha()
+        self.game_over_surface = pygame.transform.scale(self.game_over_surface, (250, 350)) 
+        self.game_over_rect = self.game_over_surface.get_rect(center=(216, 300))
+        #chèn âm thanh
+        self.flap_sound = pygame.mixer.Sound('assets/audio/sfx_wing.wav')
+        self.hit_sound = pygame.mixer.Sound('assets/audio/sfx_hit.wav')
+        self.point_sound = pygame.mixer.Sound('assets/audio/sfx_point.wav')
+        self.score_sound_countdown = 100
 
     def background(self):
         self.screen.blit(self.bg, (0, 0))
@@ -27,13 +37,30 @@ class UI:
         if self.floor_x_pos <= -432:
             self.floor_x_pos = 0
 
-    def score_display(self):
-        self.score_surface = self.game_font.render(str(self.score), True, (255, 255, 255))
-        self.score_rect = self.score_surface.get_rect(center = (216, 100))
-        self.screen.blit(self.score_surface, self.score_rect)
+    def score_display(self, game_state):
+        if game_state == 'main game':
+            if self.pipe_spawned:
+                self.score += 0.0119  
+            self.score_surface = self.game_font.render(f'{int(self.score)}', True, (255, 255, 255))
+            score_rect = self.score_surface.get_rect(center=(216, 100))
+            self.screen.blit(self.score_surface, score_rect)
 
-    def update_score(self, bird, pipes):
-        for pipe in pipes:
-            if pipe.centerx < bird.rect.left and not pipe.passed:
-                self.score +=1
-                pipe.passed = True
+        elif game_state == 'game over':
+            # Hiển thị màn hình kết thúc game
+            self.screen.blit(self.game_over_surface, self.game_over_rect)
+
+            # Hiển thị điểm hiện tại
+            self.score_surface = self.game_font.render(f'Score: {int(self.score)}', True, (255, 255, 255))
+            score_rect = self.score_surface.get_rect(center=(216, 80))
+            self.screen.blit(self.score_surface, score_rect)
+
+            # Hiển thị điểm cao (high score)
+            self.high_score = max(self.high_score, self.score)
+            self.high_score_surface = self.game_font.render(f'High Score: {int(self.high_score)}', True, (255, 255, 255))
+            high_score_rect = self.high_score_surface.get_rect(center=(216, 500))
+            self.screen.blit(self.high_score_surface, high_score_rect)
+
+    def update_score(self, score, high_score):
+        if self.score > self.high_score:
+            self.high_score = self.score
+        return self.high_score

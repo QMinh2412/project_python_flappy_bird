@@ -7,7 +7,7 @@ class Pipe:
         self.pipe_list = []
         self.pipe_height = [200, 300, 400]
         self.spawn_pipe = pygame.USEREVENT
-        pygame.time.set_timer(self.spawn_pipe, 1200)
+        pygame.time.set_timer(self.spawn_pipe, 1400)
 
     def create_pipe(self):
         random_pipes_pos = random.choice(self.pipe_height)
