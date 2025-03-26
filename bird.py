@@ -12,7 +12,7 @@ class Bird:
         self.rect = self.current_image.get_rect(center=(100,384))
         self.gravity = 0.25
         self.movement = 0
-        self.jump_strength = -6.5
+        self.jump_strength = -6
         self.BIRDFLAP_EVENT = pygame.USEREVENT + 1
         pygame.time.set_timer(self.BIRDFLAP_EVENT, 200)
 
@@ -33,9 +33,20 @@ class Bird:
     def animation(self):
         self.current_image = self.images[self.bird_index]
         self.rotate()
+        screen.blit(self.rotated_image, self.rect)
+
+    def rotate(self):
+        self.rotated_image = pygame.transform.rotozoom(self.current_image, -self.movement * 3, 1)
+        self.rect = self.rotated_image.get_rect(center=self.rect.center)
+
+    def animation(self):
+        self.current_image = self.images[self.bird_index]
+        self.rotate()
     
     def restart(self):
         self.rect.center = (100, 384)
         self.movement = 0
+        self.bird_index = 0
+        self.animation()
         self.bird_index = 0
         self.animation()
