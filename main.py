@@ -41,7 +41,7 @@ while running:
                 bird.restart()
 
         if event.type == pipe.spawn_pipe:
-            pipe.pipe_list.extend(pipe.create_pipe())   
+            pipe.pipe_list.extend(pipe.create_pipe())       
 
         if event.type == bird.BIRDFLAP_EVENT:
             if bird.bird_index < 2:
