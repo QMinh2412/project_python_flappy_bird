@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 import pygame, sys
 from bird import Bird
 from ui import UI
@@ -13,16 +14,6 @@ running = True
 pipe = Pipe()
 ui = UI(screen)
 bird = Bird()
-pipe = Pipe()
-
-# Hàm kiểm tra va chạm với ống và sàn
-def check_collision(pipes):
-    for pipe in pipes:
-        if bird.rect.colliderect(pipe):
-            return False
-    if bird.rect.top <= -75 or bird.rect.bottom >= 550:
-        return False
-    return True
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision(pipes):
@@ -44,7 +35,6 @@ while running:
             sys.exit()
 
         if event.type == pygame.KEYDOWN:
-            if event.key in (pygame.K_SPACE, pygame.K_UP) and game_active:
             if event.key in (pygame.K_SPACE, pygame.K_UP) and game_active:
                 bird.jump()
                 ui.flap_sound.play()

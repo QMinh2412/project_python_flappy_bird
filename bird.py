@@ -33,15 +33,6 @@ class Bird:
     def animation(self):
         self.current_image = self.images[self.bird_index]
         self.rotate()
-        screen.blit(self.rotated_image, self.rect)
-
-    def rotate(self):
-        self.rotated_image = pygame.transform.rotozoom(self.current_image, -self.movement * 3, 1)
-        self.rect = self.rotated_image.get_rect(center=self.rect.center)
-
-    def animation(self):
-        self.current_image = self.images[self.bird_index]
-        self.rotate()
     
     def restart(self):
         self.rect.center = (100, 384)
