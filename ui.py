@@ -24,6 +24,7 @@ class UI:
         self.hit_sound = pygame.mixer.Sound('assets/audio/sfx_hit.wav')
         self.point_sound = pygame.mixer.Sound('assets/audio/sfx_point.wav')
         self.score_sound_countdown = 100
+        # self.die_sound = pygame.mixer.sound('assets/audio/sfx_die.wav')
 
     def background(self):
         self.screen.blit(self.bg, (0, 0))
