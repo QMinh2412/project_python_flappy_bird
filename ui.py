@@ -21,8 +21,11 @@ class UI:
         self.game_over_rect = self.game_over_surface.get_rect(center=(216, 300))
         #chèn âm thanh
         self.flap_sound = pygame.mixer.Sound('assets/audio/sfx_wing.wav')
+        self.flap_sound.set_volume(0.1)
         self.hit_sound = pygame.mixer.Sound('assets/audio/sfx_hit.wav')
+        self.hit_sound.set_volume(0.1)
         self.point_sound = pygame.mixer.Sound('assets/audio/sfx_point.wav')
+        self.point_sound.set_volume(0.1)
         self.score_sound_countdown = 100
         # self.die_sound = pygame.mixer.sound('assets/audio/sfx_die.wav')
 
