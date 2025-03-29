@@ -19,9 +19,10 @@ def check_collision(pipes):
     for pipe in pipes:
         if bird.rect.colliderect(pipe):
             ui.hit_sound.play()
-            # ui.die_sound.play()
+            ui.die_sound.play()
             return False
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
+        ui.die_sound.play() 
         return False
     return True
 
@@ -43,6 +44,7 @@ while running:
                 pipe.pipe_list.clear()
                 bird.restart()
                 ui.score = 0
+                ui.pipe_spawned= False
 
         if event.type == pipe.spawn_pipe:
             pipe.pipe_list.extend(pipe.create_pipe())
@@ -85,4 +87,4 @@ while running:
     pygame.display.update()
     clock.tick(60)
 
-pygame.quit() 
+pygame.quit()  
