@@ -12,6 +12,7 @@ class UI:
         self.floor = pygame.transform.scale2x(self.floor)
         self.floor_x_pos = 0
         #score
+        self.pipe_spawned = False
         self.score = 0
         self.high_score = 0
 
@@ -28,7 +29,9 @@ class UI:
             self.floor_x_pos = 0
 
     def score_display(self):
-        self.score_surface = self.game_font.render(str(self.score), True, (255, 255, 255))
+        if self.pipe_spawned:
+            self.score +=0.0119 
+        self.score_surface = self.game_font.render(str(int(self.score)), True, (255, 255, 255))
         self.score_rect = self.score_surface.get_rect(center = (216, 100))
         self.screen.blit(self.score_surface, self.score_rect)
 
