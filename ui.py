@@ -23,12 +23,12 @@ class UI:
         self.flap_sound = pygame.mixer.Sound('assets/audio/sfx_wing.wav')
         self.flap_sound.set_volume(0.1)
         self.hit_sound = pygame.mixer.Sound('assets/audio/sfx_hit.wav')
-        self.flap_sound.set_volume(0.1)
+        self.hit_sound.set_volume(0.1)
         self.point_sound = pygame.mixer.Sound('assets/audio/sfx_point.wav')
-        self.flap_sound.set_volume(0.1)
+        self.point_sound.set_volume(0.1)
         self.score_sound_countdown = 100
         self.die_sound = pygame.mixer.Sound('assets/audio/sfx_die.wav')
-        self.flap_sound.set_volume(0.1)
+        self.die_sound.set_volume(0.1)
 
     def background(self):
         self.screen.blit(self.bg, (0, 0))
