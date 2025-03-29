@@ -19,6 +19,7 @@ def check_collision(pipes):
     for pipe in pipes:
         if bird.rect.colliderect(pipe):
             ui.hit_sound.play()
+            # ui.die_sound.play()
             return False
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
         return False
@@ -69,15 +70,14 @@ while running:
         game_active = check_collision(pipe.pipe_list)
         #điểm
         ui.score_display('main game')
-        # ui.score_sound_countdown -=1
-        # if ui.score_sound_countdown <=0:
-        #     ui.point_sound.play()
-        #     ui.score_sound_countdown = 100
+        ui.score_sound_countdown -=1
+        if ui.score_sound_countdown <=0:
+            ui.point_sound.play()
+            ui.score_sound_countdown = 100
     else:
         # Cập nhật high score và hiển thị màn hình game over
         ui.high_score = ui.update_score(ui.score, ui.high_score)
         ui.score_display('game over')
-        # Không cần blit lại game_over_surface với high_score_rect
 
     # Cập nhật giao diện sàn
     ui.floor_loop()
@@ -85,4 +85,4 @@ while running:
     pygame.display.update()
     clock.tick(60)
 
-pygame.quit()
+pygame.quit() 
