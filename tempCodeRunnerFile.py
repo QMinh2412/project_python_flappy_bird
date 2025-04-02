@@ -1,5 +1,5 @@
-if event.key in (pygame.K_SPACE, pygame.K_UP) and game_active == False:
-                game_active = True
-                pipe.pipe_list.clear()
-                bird.restart()
-                ui.score = 0
+         pipe_rect, passed = pipe.pipe_list[i]
+            if pipe_rect.centerx < bird.rect.centerx and not passed:
+                pipe.pipe_list[i] = (pipe_rect, True)  # Đánh dấu đã vượt qua
+                ui.point_sound.play()  # Phát âm thanh đúng lúc
+                ui.score += 1  # Tăng điểm
