@@ -27,7 +27,7 @@ def check_collision(pipes):
         return False
     return True
 
-game_active = True
+game_active = False
 
 while running:
     # Xử lý sự kiện quit và các sự kiện khác
