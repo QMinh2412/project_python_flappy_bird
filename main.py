@@ -17,11 +17,14 @@ bird = Bird()
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision(pipes):
-    for pipe in pipes:
-        if bird.rect.colliderect(pipe):
+    for bottom, top, score_rect in pipes:
+        if bird.rect.colliderect(bottom) or bird.rect.colliderect(top):
             ui.hit_sound.play()
             ui.die_sound.play()
             return False
+        if bird.rect.colliderect(score_rect):
+            ui.score += 0.0119
+            ui.pipe_spawned = False
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
         ui.hit_sound.play() 
         ui.die_sound.play() 
@@ -49,7 +52,7 @@ while running:
                 ui.pipe_spawned= False
 
         if event.type == pipe.spawn_pipe:
-            pipe.pipe_list.extend(pipe.create_pipe())
+            pipe.pipe_list.append(pipe.create_pipe())
             ui.pipe_spawned = True     
 
         if event.type == bird.BIRDFLAP_EVENT:

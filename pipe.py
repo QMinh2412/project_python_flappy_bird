@@ -14,17 +14,23 @@ class Pipe:
         random_pipes_pos = random.choice(self.pipe_height)
         bottom_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos))
         top_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos-800))
-        return bottom_pipe, top_pipe
+        score_rect = self.pipe_img.get_rect(midtop=(500, random_pipes_pos-400))
+        return bottom_pipe, top_pipe, score_rect
 
     def move_pipe(self):
-        self.pipe_list = [pipe for pipe in self.pipe_list if pipe.right > 0]
-        for pipe in self.pipe_list:
-            pipe.centerx -= 5
+        new_pipes = []
+        for bottom, top, score in self.pipe_list:
+            if bottom.right > 0:
+                new_pipes.append((bottom, top, score))
+        
+        self.pipe_list = new_pipes
+        for bottom, top, score in self.pipe_list:
+            bottom.centerx -= 5
+            top.centerx -= 5
+            score.centerx -= 5
 
     def draw_pipe(self, screen):
-        for pipe in self.pipe_list:
-            if pipe.bottom > 720:
-                screen.blit(self.pipe_img, pipe)
-            else:
-                flip_pipe = pygame.transform.flip(self.pipe_img, False, True)
-                screen.blit(flip_pipe, pipe)
+        for bottom, top, _ in self.pipe_list:
+            screen.blit(self.pipe_img, bottom)
+            flip_pipe = pygame.transform.flip(self.pipe_img, False, True)
+            screen.blit(flip_pipe, top)
