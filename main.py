@@ -13,21 +13,34 @@ running = True
 pipe = Pipe()
 ui = UI(screen)
 bird = Bird()
+collision = False
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision(pipes):
     for bottom, top, score_rect in pipes:
+        # Check pipe collision
         if bird.rect.colliderect(bottom) or bird.rect.colliderect(top):
             ui.hit_sound.play()
             ui.die_sound.play()
             return False
-        if bird.rect.colliderect(score_rect):
-            ui.score += 0.0119
+        
+        # Check for scoring
+        if bird.rect.right > score_rect.left and not ui.pipe_spawned:
+            ui.score += 1  # Add 1 point when passing a pipe
+            ui.pipe_spawned = True
+            ui.point_sound.play()
+            ui.score_sound_countdown = 100
+        
+        # Reset pipe_spawned flag after passing the pipe completely
+        if bird.rect.left > score_rect.right and ui.pipe_spawned:
             ui.pipe_spawned = False
+
+    # Check floor and ceiling collision
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
         ui.hit_sound.play() 
         ui.die_sound.play() 
         return False
+        
     return True
 
 game_active = True

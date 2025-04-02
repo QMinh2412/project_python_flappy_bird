@@ -44,8 +44,7 @@ class UI:
 
     def score_display(self, game_state):
         if game_state == 'main game':
-            if self.pipe_spawned:
-                self.score += 0.0119  
+        # Remove the automatic score increment
             self.score_surface = self.game_font.render(f'{int(self.score)}', True, (255, 255, 255))
             score_rect = self.score_surface.get_rect(center=(216, 100))
             self.screen.blit(self.score_surface, score_rect)
