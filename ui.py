@@ -3,7 +3,7 @@ import pygame
 class UI:
     def __init__(self, screen):
         # Font game
-        self.game_font = pygame.font.Font('04B_19.ttf', 40)
+        self.game_font = pygame.font.Font('assets/fonts/04B_19.ttf', 40)
         # Background và sàn
         self.screen = screen
         self.bg = pygame.image.load('assets/sprites/background-night.png')

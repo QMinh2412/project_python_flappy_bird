@@ -22,6 +22,7 @@ def check_collision(pipes):
             ui.die_sound.play()
             return False
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
+        ui.hit_sound.play() 
         ui.die_sound.play() 
         return False
     return True
