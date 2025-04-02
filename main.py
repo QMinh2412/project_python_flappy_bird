@@ -17,31 +17,26 @@ collision = False
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision(pipes):
-    for bottom, top, score_rect in pipes:
-        # Check pipe collision
+    for bottom, top, score_rect, passed in pipes:
+        # Kiểm tra va chạm với ống
         if bird.rect.colliderect(bottom) or bird.rect.colliderect(top):
             ui.hit_sound.play()
             ui.die_sound.play()
             return False
-        
-        # Check for scoring
-        if bird.rect.right > score_rect.left and not ui.pipe_spawned:
-            ui.score += 1  # Add 1 point when passing a pipe
-            ui.pipe_spawned = True
-            ui.point_sound.play()
-            ui.score_sound_countdown = 100
-        
-        # Reset pipe_spawned flag after passing the pipe completely
-        if bird.rect.left > score_rect.right and ui.pipe_spawned:
-            ui.pipe_spawned = False
 
-    # Check floor and ceiling collision
+        # Kiểm tra nếu chim vượt qua ống và chưa tính điểm
+        if bird.rect.left > score_rect.right and not passed:
+            ui.score += 1  # Cộng điểm
+            pipes[pipes.index((bottom, top, score_rect, passed))] = (bottom, top, score_rect, True)  # Cập nhật trạng thái
+
+    # Kiểm tra va chạm với sàn hoặc trần
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
-        ui.hit_sound.play() 
-        ui.die_sound.play() 
+        ui.hit_sound.play()
+        ui.die_sound.play()
         return False
-        
+
     return True
+
 
 game_active = True
 
@@ -78,24 +73,28 @@ while running:
 
     # Nếu game đang chạy
     if game_active:
-        # Chim
+    # Update bird and pipes
         bird.update()
         bird.rotate()
         bird.draw(screen)
-        # Ống
         pipe.move_pipe()
         pipe.draw_pipe(screen)
-        #check va chạm
+
+        # Check for collisions and update game state
         game_active = check_collision(pipe.pipe_list)
-        #điểm
+
+        # Display the score
         ui.score_display('main game')
-        ui.score_sound_countdown -=1
-        if ui.score_sound_countdown <=0:
+
+        # Play point sound when score increments
+        if ui.score_sound_countdown <= 0:
             ui.point_sound.play()
             ui.score_sound_countdown = 100
+        else:
+            ui.score_sound_countdown -= 1
     else:
-        # Cập nhật high score và hiển thị màn hình game over
-        ui.high_score = ui.update_score(ui.score, ui.high_score)
+        # Update high score and display game over screen
+        ui.update_score()
         ui.score_display('game over')
 
     # Cập nhật giao diện sàn
