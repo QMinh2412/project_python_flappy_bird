@@ -13,6 +13,7 @@ class UI:
         self.floor_x_pos = 0
         # Score
         self.pipe_spawned = False
+        self.passed = False
         self.score = 0
         self.high_score = 0
         # Màn hình kết thúc game
@@ -44,11 +45,11 @@ class UI:
 
     def score_display(self, game_state):
         if game_state == 'main game':
-            if self.pipe_spawned:
-                self.score += 0.0119  
+            # if self.passed:
+            #     self.score += 1 
             self.score_surface = self.game_font.render(f'{int(self.score)}', True, (255, 255, 255))
-            score_rect = self.score_surface.get_rect(center=(216, 100))
-            self.screen.blit(self.score_surface, score_rect)
+            uiscore_rect = self.score_surface.get_rect(center=(216, 100))
+            self.screen.blit(self.score_surface, uiscore_rect)
 
         elif game_state == 'game over':
             # Hiển thị màn hình kết thúc game
@@ -56,14 +57,14 @@ class UI:
 
             # Hiển thị điểm hiện tại
             self.score_surface = self.game_font.render(f'Score: {int(self.score)}', True, (255, 255, 255))
-            score_rect = self.score_surface.get_rect(center=(216, 80))
-            self.screen.blit(self.score_surface, score_rect)
+            uiscore_rect = self.score_surface.get_rect(center=(216, 80))
+            self.screen.blit(self.score_surface, uiscore_rect)
 
             # Hiển thị điểm cao (high score)
             self.high_score = max(self.high_score, self.score)
             self.high_score_surface = self.game_font.render(f'High Score: {int(self.high_score)}', True, (255, 255, 255))
-            high_score_rect = self.high_score_surface.get_rect(center=(216, 500))
-            self.screen.blit(self.high_score_surface, high_score_rect)
+            uihigh_score_rect = self.high_score_surface.get_rect(center=(216, 500))
+            self.screen.blit(self.high_score_surface, uihigh_score_rect)
 
     def update_score(self, score, high_score):
         if self.score > self.high_score:

@@ -16,16 +16,37 @@ bird = Bird()
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision(pipes):
-    for pipe in pipes:
-        if bird.rect.colliderect(pipe):
+    for bottom, top, score_rect in pipes:
+        if bird.rect.colliderect(bottom) or bird.rect.colliderect(top):
             ui.hit_sound.play()
             ui.die_sound.play()
             return False
+        # if bird.rect.colliderect(score_rect.left):
+        #     # ui.score += 0.0119
+        #     # ui.pipe_spawned = False
+        #     print('score')
+        # if bird.rect.right > score_rect.left and not ui.passed:
+        #     ui.score += 1 # Add score when bird passes the pipe
+        #     ui.passed = True  # Prevent multiple score increments
+        
+        # # Check if the bird crosses the right side of score_rect
+        # if bird.rect.left > score_rect.right and ui.passed:
+        #     ui.passed = False
+        if bird.rect.right > score_rect.left and not ui.passed:
+            ui.score += 1  # Increment score
+            score_data = (score_rect, True)  # Mark this pipe as passed
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
         ui.hit_sound.play() 
         ui.die_sound.play() 
         return False
     return True
+
+def collision_score():
+    for bottom, top, score_rect in pipe.pipe_list:
+        if bird.rect.colliderect(score_rect):
+            ui.score += 1
+            ui.pipe_spawned = True
+    return ui.score
 
 game_active = False
 
@@ -45,11 +66,11 @@ while running:
                 pipe.pipe_list.clear()
                 bird.restart()
                 ui.score = 0
-                ui.pipe_spawned= False
+                ui.passed= False
 
         if event.type == pipe.spawn_pipe:
-            pipe.pipe_list.extend(pipe.create_pipe())
-            ui.pipe_spawned = True     
+            pipe.pipe_list.append(pipe.create_pipe())
+            # ui.pipe_spawned = True     
 
         if event.type == bird.BIRDFLAP_EVENT:
             if bird.bird_index < 2:
@@ -73,6 +94,7 @@ while running:
         game_active = check_collision(pipe.pipe_list)
         #điểm
         ui.score_display('main game')
+        collision_score()
         ui.score_sound_countdown -=1
         if ui.score_sound_countdown <=0:
             ui.point_sound.play()
