@@ -44,26 +44,26 @@ class UI:
 
     def score_display(self, game_state):
         if game_state == 'main game':
-            # Display the current score during the game
+            # Hiển thị màn hình đang chơi
             score_surface = self.game_font.render(f'{int(self.score)}', True, (255, 255, 255))
             score_rect = score_surface.get_rect(center=(216, 100))
             self.screen.blit(score_surface, score_rect)
 
         elif game_state == 'game over':
-            # Display the game over screen
+            # Hiển thị màn hình kết thúc
             self.screen.blit(self.game_over_surface, self.game_over_rect)
 
-            # Display the final score
+            # Hiển thị điểm
             score_surface = self.game_font.render(f'Score: {int(self.score)}', True, (255, 255, 255))
             score_rect = score_surface.get_rect(center=(216, 80))
             self.screen.blit(score_surface, score_rect)
 
-            # Display the high score
+            # Hiển thị điểm cao nhất
             high_score_surface = self.game_font.render(f'High Score: {int(self.high_score)}', True, (255, 255, 255))
             high_score_rect = high_score_surface.get_rect(center=(216, 500))
             self.screen.blit(high_score_surface, high_score_rect)
 
     def update_score(self):
-        # Update the high score if the current score is greater
+        # cập nhật lại điểm
         if self.score > self.high_score:
             self.high_score = self.score

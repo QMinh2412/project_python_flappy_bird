@@ -31,8 +31,7 @@ class Pipe:
 
 
     def draw_pipe(self, screen):
-        for bottom, top, score_rect, _ in self.pipe_list:
+        for bottom, top, _, _ in self.pipe_list:
             screen.blit(self.pipe_img, bottom)
             flip_pipe = pygame.transform.flip(self.pipe_img, False, True)
             screen.blit(flip_pipe, top)
-            pygame.draw.rect(screen, (255, 0, 0), score_rect, 2)
