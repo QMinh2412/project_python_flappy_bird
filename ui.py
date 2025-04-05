@@ -44,17 +44,10 @@ class UI:
 
     def score_display(self, game_state):
         if game_state == 'main game':
-<<<<<<< HEAD
-        # Remove the automatic score increment
-            self.score_surface = self.game_font.render(f'{int(self.score)}', True, (255, 255, 255))
-            score_rect = self.score_surface.get_rect(center=(216, 100))
-            self.screen.blit(self.score_surface, score_rect)
-=======
             # Display the current score during the game
             score_surface = self.game_font.render(f'{int(self.score)}', True, (255, 255, 255))
             score_rect = score_surface.get_rect(center=(216, 100))
             self.screen.blit(score_surface, score_rect)
->>>>>>> 1cf7df0bd4b3236bbf37f748a16312f061bdce3a
 
         elif game_state == 'game over':
             # Display the game over screen

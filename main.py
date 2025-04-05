@@ -27,14 +27,14 @@ def check_collision(pipes):
         # Kiểm tra nếu chim vượt qua ống và chưa tính điểm
         if bird.rect.left > score_rect.right and not passed:
             ui.score += 1  # Cộng điểm
-            pipes[pipes.index((bottom, top, score_rect, passed))] = (bottom, top, score_rect, True)  # Cập nhật trạng thái
+            pipes[pipes.index((bottom, top, score_rect, passed))] = (bottom, top, score_rect, True)
+            ui.point_sound.play()  # Cập nhật trạng thái
 
     # Kiểm tra va chạm với sàn hoặc trần
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
         ui.hit_sound.play()
         ui.die_sound.play()
         return False
-
     return True
 
 
@@ -85,13 +85,6 @@ while running:
 
         # Display the score
         ui.score_display('main game')
-
-        # Play point sound when score increments
-        if ui.score_sound_countdown <= 0:
-            ui.point_sound.play()
-            ui.score_sound_countdown = 100
-        else:
-            ui.score_sound_countdown -= 1
     else:
         # Update high score and display game over screen
         ui.update_score()

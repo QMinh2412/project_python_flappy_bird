@@ -12,23 +12,16 @@ class Pipe:
     def create_pipe(self):
         random_pipes_pos = random.choice(self.pipe_height)
         bottom_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos))
-<<<<<<< HEAD
-        top_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos-800))
-        score_rect = pygame.Rect(bottom_pipe.left, top_pipe.bottom, self.pipe_img.get_width(), bottom_pipe.top - top_pipe.bottom)
-        return bottom_pipe, top_pipe, score_rect 
-=======
         top_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos - 800))
-        
-        # Score Rect: Một hitbox nhỏ có chiều rộng 1px, chiều cao full màn hình
-        score_rect = pygame.Rect(bottom_pipe.right, 0, 1, 720)
->>>>>>> 1cf7df0bd4b3236bbf37f748a16312f061bdce3a
+        score_rect = pygame.Rect(bottom_pipe.right, top_pipe.bottom, 1, bottom_pipe.top - top_pipe.bottom)
 
         return bottom_pipe, top_pipe, score_rect, False  # Thêm 'False' để đánh dấu trạng thái tính điểm
+    
     def move_pipe(self):
         new_pipes = []
         for bottom, top, score, passed in self.pipe_list:
             if bottom.right > 0:
-                new_pipes.append((bottom, top, score, passed))  # Giữ nguyên tất cả giá trị
+                new_pipes.append((bottom, top, score, passed))
         
         self.pipe_list = new_pipes
         for bottom, top, score, passed in self.pipe_list:
@@ -38,11 +31,7 @@ class Pipe:
 
 
     def draw_pipe(self, screen):
-<<<<<<< HEAD
-        for bottom, top, score_rect in self.pipe_list:
-=======
-        for bottom, top, _, _ in self.pipe_list:  # Thêm biến 'passed' nhưng không sử dụng
->>>>>>> 1cf7df0bd4b3236bbf37f748a16312f061bdce3a
+        for bottom, top, score_rect, _ in self.pipe_list:
             screen.blit(self.pipe_img, bottom)
             flip_pipe = pygame.transform.flip(self.pipe_img, False, True)
             screen.blit(flip_pipe, top)
