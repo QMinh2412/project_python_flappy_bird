@@ -6,7 +6,7 @@ from pipe import Pipe
 
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=512)
 pygame.init()
-screen = pygame.display.set_mode((432, 720))
+screen = pygame.display.set_mode((864, 720))
 clock = pygame.time.Clock()
 running = True
 
@@ -28,6 +28,7 @@ def check_collision(pipes):
         if bird.rect.left > score_rect.right and not passed:
             ui.score += 1  # Cộng điểm
             pipes[pipes.index((bottom, top, score_rect, passed))] = (bottom, top, score_rect, True)  # Cập nhật trạng thái
+            ui.point_sound.play()
 
     # Kiểm tra va chạm với sàn hoặc trần
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
@@ -76,7 +77,7 @@ while running:
         bird.update()
         bird.rotate()
         bird.draw(screen)
-        pipe.move_pipe()
+        pipe.move_pipe(ui.score)
         pipe.draw_pipe(screen)
 
         # Check for collisions and update game state
@@ -85,12 +86,6 @@ while running:
         # Display the score
         ui.score_display('main game')
 
-        # Play point sound when score increments
-        if ui.score_sound_countdown <= 0:
-            ui.point_sound.play()
-            ui.score_sound_countdown = 100
-        else:
-            ui.score_sound_countdown -= 1
     else:
         # Update high score and display game over screen
         ui.update_score()

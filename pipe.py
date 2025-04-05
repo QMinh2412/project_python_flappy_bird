@@ -14,12 +14,10 @@ class Pipe:
         random_pipes_pos = random.choice(self.pipe_height)
         bottom_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos))
         top_pipe = self.pipe_img.get_rect(midtop=(500, random_pipes_pos - 800))
-        
-        # Score Rect: Một hitbox nhỏ có chiều rộng 1px, chiều cao full màn hình
-        score_rect = pygame.Rect(bottom_pipe.right, 0, 1, 720)
 
+        score_rect = pygame.Rect(bottom_pipe.right, top_pipe.bottom, 1, bottom_pipe.top - top_pipe.bottom)
         return bottom_pipe, top_pipe, score_rect, False  # Thêm 'False' để đánh dấu trạng thái tính điểm
-    def move_pipe(self):
+    def move_pipe(self, score_value):
         new_pipes = []
         for bottom, top, score, passed in self.pipe_list:
             if bottom.right > 0:
@@ -31,9 +29,20 @@ class Pipe:
             top.centerx -= 5
             score.centerx -= 5
 
+        # Nếu điểm lớn hơn 5, di chuyển ống lên xuống
+        if score_value > 2:
+            self.oscillate_pipes()
+
 
     def draw_pipe(self, screen):
-        for bottom, top, _, _ in self.pipe_list:  # Thêm biến 'passed' nhưng không sử dụng
+        for bottom, top, score_rect, _ in self.pipe_list:  # Thêm biến 'passed' nhưng không sử dụng
             screen.blit(self.pipe_img, bottom)
             flip_pipe = pygame.transform.flip(self.pipe_img, False, True)
             screen.blit(flip_pipe, top)
+            pygame.draw.rect(screen, (255, 0, 0), score_rect, 2)
+        
+    def oscillate_pipes(self):
+        for bottom, top, _, _ in self.pipe_list:
+            offset = random.choice([-3, 3])  # Tăng biên độ giao động lên 3
+            bottom.centery += offset  # Ống dưới di chuyển lên hoặc xuống
+            top.centery = bottom.centery - 800  # Đảm bảo khoảng cách giữa các ống luôn giữ nguyên
