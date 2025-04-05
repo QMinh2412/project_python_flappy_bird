@@ -16,37 +16,27 @@ bird = Bird()
 
 # Hàm kiểm tra va chạm với ống và sàn
 def check_collision(pipes):
-    for bottom, top, score_rect in pipes:
+    for bottom, top, score_rect, passed in pipes:
+        # Kiểm tra va chạm với ống
         if bird.rect.colliderect(bottom) or bird.rect.colliderect(top):
             ui.hit_sound.play()
             ui.die_sound.play()
             return False
-        # if bird.rect.colliderect(score_rect.left):
-        #     # ui.score += 0.0119
-        #     # ui.pipe_spawned = False
-        #     print('score')
-        # if bird.rect.right > score_rect.left and not ui.passed:
-        #     ui.score += 1 # Add score when bird passes the pipe
-        #     ui.passed = True  # Prevent multiple score increments
-        
-        # # Check if the bird crosses the right side of score_rect
-        # if bird.rect.left > score_rect.right and ui.passed:
-        #     ui.passed = False
-        if bird.rect.right > score_rect.left and not ui.passed:
-            ui.score += 1  # Increment score
-            score_data = (score_rect, True)  # Mark this pipe as passed
+
+        # Kiểm tra nếu chim vượt qua ống và chưa tính điểm
+        if bird.rect.left > score_rect.right and not passed:
+            ui.score += 1  # Cộng điểm
+            pipes[pipes.index((bottom, top, score_rect, passed))] = (bottom, top, score_rect, True)  # Cập nhật trạng thái
+            ui.point_sound.play()           
+
+    # Kiểm tra va chạm với sàn hoặc trần
     if bird.rect.top <= -75 or bird.rect.bottom >= 550:
-        ui.hit_sound.play() 
-        ui.die_sound.play() 
+        ui.hit_sound.play()
+        ui.die_sound.play()
         return False
+
     return True
 
-def collision_score():
-    for bottom, top, score_rect in pipe.pipe_list:
-        if bird.rect.colliderect(score_rect):
-            ui.score += 1
-            ui.pipe_spawned = True
-    return ui.score
 
 game_active = False
 
@@ -83,25 +73,22 @@ while running:
 
     # Nếu game đang chạy
     if game_active:
-        # Chim
+    # Update bird and pipes
         bird.update()
         bird.rotate()
         bird.draw(screen)
-        # Ống
         pipe.move_pipe()
         pipe.draw_pipe(screen)
-        #check va chạm
+
+        # Check for collisions and update game state
         game_active = check_collision(pipe.pipe_list)
-        #điểm
+
+        # Display the score
         ui.score_display('main game')
-        collision_score()
-        ui.score_sound_countdown -=1
-        if ui.score_sound_countdown <=0:
-            ui.point_sound.play()
-            ui.score_sound_countdown = 100
+
     else:
-        # Cập nhật high score và hiển thị màn hình game over
-        ui.high_score = ui.update_score(ui.score, ui.high_score)
+        # Update high score and display game over screen
+        ui.update_score()
         ui.score_display('game over')
 
     # Cập nhật giao diện sàn
