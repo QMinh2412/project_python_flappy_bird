@@ -39,5 +39,3 @@ class Bird:
         self.movement = 0
         self.bird_index = 0
         self.animation()
-        self.bird_index = 0
-        self.animation()

@@ -29,13 +29,9 @@ class Pipe:
             top.centerx -= 5
             score.centerx -= 5
 
-        # Nếu điểm lớn hơn 5, di chuyển ống lên xuống
-        if score_value > 2:
-            self.oscillate_pipes()
-
 
     def draw_pipe(self, screen):
-        for bottom, top, score_rect, _ in self.pipe_list:
+        for bottom, top, _, _ in self.pipe_list:
             screen.blit(self.pipe_img, bottom)
             flip_pipe = pygame.transform.flip(self.pipe_img, False, True)
             screen.blit(flip_pipe, top)
